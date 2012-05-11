@@ -7,7 +7,8 @@ setup(
     author='NandaKishore',
     author_email='madhav.bnk@gmail.com',
     packages=find_packages(exclude=["tests"]),
-    install_requires=['zope.interface',
+    install_requires=['lxml',
+                      'zope.interface',
                       'zope.component',
                       ],
     )
