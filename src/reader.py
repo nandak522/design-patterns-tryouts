@@ -1,7 +1,7 @@
 import csv
 import os
 from zope.interface import Interface, Attribute, implements
-from lxml import etree
+from lxml.etree import iterparse
 
 class IReader(Interface):
     '''
@@ -48,9 +48,12 @@ class XMLFileReader(object):
         self.name = name
 
     def reader(self):
-        etree.iterparse()
+        return iterparse(self.name,
+                         events=('end',),
+                         tag='emp')
 
 if __name__ == '__main__':
-    fl = CSVFileReader(name='sample.csv')
+    #fl = CSVFileReader(name='sample.csv')
+    fl = XMLFileReader(name='sample.xml')
     for line in fl.reader():
         print line
