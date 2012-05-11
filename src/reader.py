@@ -37,9 +37,10 @@ class CSVFileReader(object):
         self.name = name
 
     def reader(self):
-        return csv.reader(open(os.path.abspath(self.name), 'r'),
-                          delimiter=',',
-                          quotechar='"')
+        for record in csv.reader(open(os.path.abspath(self.name), 'r'),
+                                 delimiter=',',
+                                 quotechar='"'):
+            yield record
 
 class XMLFileReader(object):
     implements(IReader)
@@ -48,12 +49,13 @@ class XMLFileReader(object):
         self.name = name
 
     def reader(self):
-        return iterparse(self.name,
-                         events=('end',),
-                         tag='emp')
+        for _, node in iterparse(self.name,
+                                 events=('end',),
+                                 tag='emp'):
+            yield node
 
 if __name__ == '__main__':
-    #fl = CSVFileReader(name='sample.csv')
-    fl = XMLFileReader(name='sample.xml')
+    fl = CSVFileReader(name='sample.csv')
+    #fl = XMLFileReader(name='sample.xml')
     for line in fl.reader():
         print line
